@@ -342,11 +342,16 @@ public class FloatingPieces : MonoBehaviour
 
     void HandleHorizontalMovement()
     {
+
+        const float blockMoveSfxVolMod = 0.4f;
+
         float repeatRate = 0.1f;  // Time in seconds between moves when key is held
         if (PlayerControls.Get().vDir.x < 0 && Time.time >= _nextLeftMoveTime)
         {
             if (IsValidLocationOffset(new Vector3(-1, 0, 0)))
             {
+                RTAudioManager.Get().PlayEx("move", blockMoveSfxVolMod);
+
                 MovePieces(new Vector3(-1, 0, 0));
                 _nextLeftMoveTime = Time.time + repeatRate;
             }
@@ -356,6 +361,7 @@ public class FloatingPieces : MonoBehaviour
         {
             if (IsValidLocationOffset(new Vector3(1, 0, 0)))
             {
+                RTAudioManager.Get().PlayEx("move", blockMoveSfxVolMod);
                 MovePieces(new Vector3(1, 0, 0));
                 _nextRightMoveTime = Time.time + repeatRate;
             }
@@ -444,6 +450,11 @@ public class FloatingPieces : MonoBehaviour
     void RotatePiece(eRotPos originalRotation, bool clockwise)
     {
         RTAudioManager.Get().Play("rotate");
+        
+        
+        if (FallingPieceCount() < 2) return; //no reason to rotate at this point
+        
+        
         if (clockwise)
         {
             _rotPos = (eRotPos)(((int)_rotPos + 1) % (int)eRotPos.SIZE);

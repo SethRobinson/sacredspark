@@ -584,6 +584,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 56db3e386b44dc54fac4ab79d19ef68b, type: 3}
   - {fileID: 8300000, guid: 77bdbd4b9cbcd8445a0997c497bae72f, type: 3}
   - {fileID: 8300000, guid: c7d5fec24940b8146bdb0b6dadc707aa, type: 3}
+  - {fileID: 8300000, guid: bd478e2fa9906e04497be9acb6c04fde, type: 3}
 --- !u!114 &311706014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -874,7 +875,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.6
+  m_fontSize: 15.65
   m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2451,7 +2452,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15.8
+  m_fontSize: 12
   m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3115,7 +3116,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1934834578}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -3995,7 +3996,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
+  m_fontSize: 25.9
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
