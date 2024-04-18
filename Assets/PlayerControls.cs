@@ -32,7 +32,6 @@ public class PlayerControls : MonoBehaviour
     }
     private void Awake()
     {
-      
         _this = this;
         input = new CustomInput();
        
@@ -40,7 +39,8 @@ public class PlayerControls : MonoBehaviour
         input.Player.Movement.canceled += OnMovementCanceled;
         //input.Player.RotateLeft.started += OnRotateLeft;
 
-
+        //to check if Start button was pressed from anywhere in the app:
+        //if (PlayerControls.Get().GetInput().Player.Start.WasPressedThisFrame())
     }
 
     /*
@@ -60,7 +60,6 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
     }
     
     void OnMovementPerformed(InputAction.CallbackContext value)

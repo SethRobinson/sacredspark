@@ -338,6 +338,13 @@ public class FloatingPieces : MonoBehaviour
         }
         HandleRotation();
         HandleQuickDrop();
+
+        if (PlayerControls.Get().GetInput().Player.Back.WasPressedThisFrame())
+        {
+            RTAudioManager.Get().StopMusic();
+            RTMessageManager.Get().Schedule(0.0f, GameLogic.Get().OnPlayerIsDead);
+        }
+
     }
 
     void HandleHorizontalMovement()

@@ -18,10 +18,17 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (PlayerControls.Get().GetInput().Player.Start.WasPressedThisFrame()
+            || PlayerControls.Get().GetInput().Player.RotateLeft.WasPressedThisFrame()
+            || PlayerControls.Get().GetInput().Player.RotateRight.WasPressedThisFrame())
         {
             OnPlayButton();
         }
+        if (PlayerControls.Get().GetInput().Player.Back.WasPressedThisFrame())
+        {
+            OnInfoButton();
+        }
+
     }
 
 
@@ -31,5 +38,15 @@ public class MainMenu : MonoBehaviour
         GameLogic.Get().StartGame();
         //set us to inactive
         RTUtil.SetActiveByNameIfExists("MainMenu", false);
+    }
+
+    public void OnInfoButton()
+    {
+        //startup game
+        GameLogic.Get().StopGame();
+        //set us to inactive
+        RTUtil.SetActiveByNameIfExists("MainMenu", false);
+        RTUtil.SetActiveByNameIfExists("RTIntroSplash", true);
+        RTAudioManager.Get().StopMusic();
     }
 }

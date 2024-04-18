@@ -77,13 +77,14 @@ public class GameLogic : MonoBehaviour
         Application.SetStackTraceLogType(LogType.Warning, StackTraceLogType.ScriptOnly);
         */
     }
+
     public void ShowTitleScreenFromIntroSplash()
     {
         //play music
-        RTMessageManager.Get().Schedule(0.1f, RTAudioManager.Get().PlayMusic, "title_screen_music", 1.0f, 1.0f, true);
-
+        RTMessageManager.Get().Schedule(0.1f, RTAudioManager.Get().PlayMusic, "title_screen_music", 0.7f, 1.0f, true);
         ShowTitleScreen();
     }
+
     public void ShowTitleScreen()
     {
         Debug.Log("Showing title");
@@ -99,7 +100,6 @@ public class GameLogic : MonoBehaviour
             Debug.LogError("Why does a floating piece already exist?");
             return;
         }
-
 
         RTConsole.Log("Creating floating pieces");
         //create our instance from the prefab
@@ -131,13 +131,12 @@ public class GameLogic : MonoBehaviour
     {
         return _level;
     }
-
+    
     void UpdateLevelText()
     {
         _levelText.text = _level.ToString();
     }
 
-   
 
     void CalculateLevel()
     {
@@ -221,6 +220,15 @@ public class GameLogic : MonoBehaviour
         }
 
     }
+
+    public void StopGame()
+    {
+        if (_floatingPieces != null)
+        {
+            Destroy(_floatingPieces);
+            _floatingPieces = null;
+        }
+    }
     public void StartGame()
     {
         RTUtil.SetActiveByNameIfExists("ScoreCanvas", true);
@@ -238,7 +246,6 @@ public class GameLogic : MonoBehaviour
         NextPieceDisplay.Get().UpdatePieces();
         SpawnFloatingPieces();
         RTMessageManager.Get().Schedule(0.1f, RTAudioManager.Get().PlayMusic, "playing_music", 0.1f, 1.0f, true);
-
     }
 
 
@@ -273,10 +280,7 @@ public class GameLogic : MonoBehaviour
         _floatingPieces = null;
         //StartGame();
         //play music with RTMessageManager
-     
-        RTMessageManager.Get().Schedule(0.1f, RTAudioManager.Get().PlayMusic, "gameover_music", 1.0f, 1.0f, true);
-
-
+        RTMessageManager.Get().Schedule(0.1f, RTAudioManager.Get().PlayMusic, "gameover_music", 0.6f, 1.0f, true);
         ShowTitleScreen();
     }
 
@@ -297,7 +301,6 @@ public class GameLogic : MonoBehaviour
                     print("Detected -runfullserver flag");
                     _isServer = true;
                 }
-
             */
 
         RTConsole.Get().SetShowUnityDebugLogInConsole(true);
@@ -309,18 +312,12 @@ public class GameLogic : MonoBehaviour
         print ("Beta build detected!");
 #endif
 
-       
         RTConsole.Get().SetMirrorToDebugLog(true);
-
-
         RTConsole.Log("Initting the board");
         _board = new Board();
         _tableDisplay = GameObject.Find("Table").GetComponent<TableDisplay>();
-
         // RTAudioManager.Get().SetDefaultMusicVol(0.4f);
-
         //StartGame();
-
     }
 
    
@@ -343,7 +340,6 @@ public class GameLogic : MonoBehaviour
     // Update is called once per frame
     void Update () 
     {
-
     }
 
 }

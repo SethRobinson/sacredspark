@@ -8,6 +8,7 @@ public class Config : MonoBehaviour
     public static bool _isTestMode = false; //could do anything, _testMode is checked by random functions
     public const float _clientVersion = 0.1f;
     int _pieceCountGivenAtOnce = 2;
+    public bool _demoMode = true; //special mode that overlays info at all times so this is easier to understand for C2 Gamedev night on 4/19/2024
     public int _colorsOnBoard;
     static Config _this;
     public List<AudioClip> _audioClips; //any audio added will be seen by RTAudioManager and can be played like:

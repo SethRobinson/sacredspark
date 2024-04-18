@@ -13,7 +13,9 @@ public class RTIntroSplash : MonoBehaviour
     public void OnCloseButtonClicked()
     {
        // Debug.Log("Close button clicked");
-        GameObject.Destroy(gameObject);
+        //GameObject.Destroy(gameObject);
+        RTUtil.SetActiveByNameIfExists("RTIntroSplash", false);
+        GameLogic.Get().ShowTitleScreen();
     }
     public void OnLogoClicked()
     {
@@ -24,6 +26,12 @@ public class RTIntroSplash : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (PlayerControls.Get().GetInput().Player.Start.WasPressedThisFrame()
+            || PlayerControls.Get().GetInput().Player.RotateLeft.WasPressedThisFrame()
+            || PlayerControls.Get().GetInput().Player.RotateRight.WasPressedThisFrame())
+        { 
+            OnCloseButtonClicked();
+        }
     }
 }
