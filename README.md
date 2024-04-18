@@ -9,7 +9,7 @@ It gets faster as you go, but this also causes the scores to increase and make c
 
 I think 1,400 points is a decent score.
 
-Hacked in mobile controls at the last minute, you'll only see them if you have a touch screen device, I hope.
+Supports gamepad (including the web version), keyboard, and touch screen (touch screen will only show when run on mobile devices)
 
 [My LD page](https://ldjam.com/users/sethr/games)
 

@@ -15,7 +15,7 @@ public class RTIntroSplash : MonoBehaviour
        // Debug.Log("Close button clicked");
         //GameObject.Destroy(gameObject);
         RTUtil.SetActiveByNameIfExists("RTIntroSplash", false);
-        GameLogic.Get().ShowTitleScreen();
+        GameLogic.Get().ShowTitleScreenFromIntroSplash();
     }
     public void OnLogoClicked()
     {
