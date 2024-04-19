@@ -7,7 +7,21 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!RTUtil.IsOnMobile())
+        bool bIsRunningOniOSorAndroid = false;
+        if (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android)
+        {
+            bIsRunningOniOSorAndroid = true;
+        }
+
+        //are we currently running from the Unity editor?  If so, set bInEditor
+        bool bInEditor = false;
+        if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor)
+        {
+            bInEditor = true;
+        }
+        
+
+        if (!RTUtil.IsOnMobile() && !(bIsRunningOniOSorAndroid) && !bInEditor)
         {
             //guess we don't need the button overlays
             RTUtil.SetActiveByNameIfExists("ControlCanvas", false);

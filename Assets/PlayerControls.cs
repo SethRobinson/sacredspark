@@ -14,6 +14,10 @@ public class PlayerControls : MonoBehaviour
 
     static PlayerControls _this = null;
 
+    public bool bLeftOrRightPressedThisFrame = false;
+    public bool bUpOrDownThisFrame = false;
+    Vector2 vDirLast = Vector2.zero;
+
     static public PlayerControls Get()
     {
         return _this;
@@ -58,22 +62,43 @@ public class PlayerControls : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
+        bLeftOrRightPressedThisFrame = false;
+        bUpOrDownThisFrame = false;
     }
+
     
     void OnMovementPerformed(InputAction.CallbackContext value)
     {
 
         vDir = value.ReadValue<Vector2>();
-        Debug.Log("Got movement: X: " + vDir.x + " Y: " + vDir.y);
+      //  Debug.Log("Got movement: X: " + vDir.x + " Y: " + vDir.y);
 
+        if (vDirLast.x == 0)
+        {
+
+            bLeftOrRightPressedThisFrame = true;
+        }
+
+        if (vDirLast.y == 0)
+        {
+            bUpOrDownThisFrame = true;
+        }
+
+        vDirLast = vDir;
     }
 
     void OnMovementCanceled(InputAction.CallbackContext value)
     {
 
         vDir = value.ReadValue<Vector2>();
-        Debug.Log("Got cancel movement: X: " + vDir.x + " Y: " + vDir.y);
+      //  Debug.Log("Got cancel movement: X: " + vDir.x + " Y: " + vDir.y);
+
+        if (vDir.x == 0)
+        {
+            bLeftOrRightPressedThisFrame = false;
+        }
+        vDirLast = vDir;
     }
 }

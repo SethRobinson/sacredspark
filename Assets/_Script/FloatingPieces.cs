@@ -49,6 +49,7 @@ public class FloatingPieces : MonoBehaviour
     float _nextRightMoveTime;
     float _nextDownMoveTime;
     float _ignoreKeyTimer;
+    bool _bDirWasHeldDownLastFrame;
     const float C_IGNORE_KEY_TIME = 0.2f; //we don't allow movement right after this spawns to help stop false moves
     bool _bQuickDropAllowed = true;
     //for debugging, a way to cheat
@@ -351,12 +352,36 @@ public class FloatingPieces : MonoBehaviour
     {
 
         const float blockMoveSfxVolMod = 0.4f;
-
+        
         float repeatRate = 0.1f;  // Time in seconds between moves when key is held
+
+        if (!_bDirWasHeldDownLastFrame)
+        {
+            //first movement has a longer delay, feels more like tetris controls
+            repeatRate = 0.22f;
+        }
+
+      
+        if (PlayerControls.Get().vDir.x < 0 || PlayerControls.Get().vDir.x > 0)
+        {
+            _bDirWasHeldDownLastFrame = true;
+        } else
+        {
+            _bDirWasHeldDownLastFrame = false;
+        }
+
+        if (PlayerControls.Get().bLeftOrRightPressedThisFrame)
+        {
+            //they actually tapped the button on the dpad so yes, they can move right now
+            _nextLeftMoveTime = 0;
+            _nextRightMoveTime = 0;
+        }
+
         if (PlayerControls.Get().vDir.x < 0 && Time.time >= _nextLeftMoveTime)
         {
             if (IsValidLocationOffset(new Vector3(-1, 0, 0)))
             {
+       
                 RTAudioManager.Get().PlayEx("move", blockMoveSfxVolMod);
 
                 MovePieces(new Vector3(-1, 0, 0));
@@ -368,6 +393,7 @@ public class FloatingPieces : MonoBehaviour
         {
             if (IsValidLocationOffset(new Vector3(1, 0, 0)))
             {
+      
                 RTAudioManager.Get().PlayEx("move", blockMoveSfxVolMod);
                 MovePieces(new Vector3(1, 0, 0));
                 _nextRightMoveTime = Time.time + repeatRate;
@@ -379,12 +405,21 @@ public class FloatingPieces : MonoBehaviour
     {
         float downRepeatRate = 0.05f;  // More frequent as typically down is a quick move
 
-        MovePieces(new Vector3(0, 1, 0));
+        if (PlayerControls.Get().bUpOrDownThisFrame)
+        {
+            downRepeatRate = 0.1f;
+        }
+         MovePieces(new Vector3(0, 1, 0));
         _nextDownMoveTime = Time.time + downRepeatRate;
     }
     void HandleVerticalMovement()
     {
-       if (PlayerControls.Get().vDir.y < 0 && Time.time >= _nextDownMoveTime)
+        if (PlayerControls.Get().bUpOrDownThisFrame)
+        {
+            _nextDownMoveTime = 0;
+        }
+
+        if (PlayerControls.Get().vDir.y < 0 && Time.time >= _nextDownMoveTime)
         {
             DropBlocksDownOne();
         }
