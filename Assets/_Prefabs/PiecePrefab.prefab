@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391764546558483416}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1391764547884090428}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1391764546558483418
 SpriteRenderer:
@@ -108,6 +108,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391764547884090418}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -115,7 +116,6 @@ Transform:
   m_Children:
   - {fileID: 1391764546558483417}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1391764547884090419
 MonoBehaviour:
@@ -137,3 +137,9 @@ MonoBehaviour:
   - sprites:
     - {fileID: 1392403817, guid: f0787321b69a8d840a1b0fee46f52948, type: 3}
     - {fileID: 1685496982, guid: f0787321b69a8d840a1b0fee46f52948, type: 3}
+  - sprites:
+    - {fileID: 160492386, guid: 8ffe684815693d24c98d79bd63c98667, type: 3}
+    - {fileID: 180941829, guid: 8ffe684815693d24c98d79bd63c98667, type: 3}
+  - sprites:
+    - {fileID: 1534941947, guid: c40b9c05299e4124e9b877019a5a6c02, type: 3}
+    - {fileID: -2096151483, guid: c40b9c05299e4124e9b877019a5a6c02, type: 3}

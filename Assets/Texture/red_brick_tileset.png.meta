@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f0787321b69a8d840a1b0fee46f52948
+guid: c40b9c05299e4124e9b877019a5a6c02
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: blue_brick_tileset_0
+      name: red_brick_tileset_0
       rect:
         serializedVersion: 2
         x: 0
@@ -150,14 +150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c5268268667814a48b600952bd0d13f0
-      internalID: 1392403817
+      spriteID: 861967f290a881d40b52e0722201232a
+      internalID: 1534941947
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blue_brick_tileset_1
+      name: red_brick_tileset_1
       rect:
         serializedVersion: 2
         x: 128
@@ -171,8 +171,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00312e687abeed940bf4390b9d5886bb
-      internalID: 1685496982
+      spriteID: 134ced1c21950fa4b9edceacd98ffd59
+      internalID: -2096151483
       vertices: []
       indices: 
       edges: []
@@ -188,8 +188,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      blue_brick_tileset_0: 1392403817
-      blue_brick_tileset_1: 1685496982
+      red_brick_tileset_0: 1534941947
+      red_brick_tileset_1: -2096151483
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

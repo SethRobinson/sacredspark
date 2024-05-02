@@ -18,12 +18,10 @@ public class Piece : System.Object
 
     public enum eColor
     {
-        RED,
+        PURPLE,
         BLUE,
-        YELLOW,
-        MAGENTA,
-        GREEN,
         ORANGE,
+        RED,
         ANY, //special case, means it can match any color
 
         COLOR_COUNT
@@ -33,7 +31,7 @@ public class Piece : System.Object
     {
         switch (_color)
         {
-            case eColor.RED:
+            case eColor.PURPLE:
                 return "Red";
             case eColor.BLUE:
                 return "Blue";
@@ -50,16 +48,17 @@ public class Piece : System.Object
         switch (Random.Range(0, maxColors))
         {
             case 0:
-                color = Piece.eColor.RED; break;
+                color = Piece.eColor.PURPLE; break;
             case 1:
                 color = Piece.eColor.BLUE; break;
             case 2:
-                color = Piece.eColor.MAGENTA; break;
-            case 3:
-                color = Piece.eColor.GREEN; break;
-            case 4:
                 color = Piece.eColor.ORANGE; break;
-      
+            case 3:
+                color = Piece.eColor.RED; break;
+            default:
+                //error
+                Debug.Log("Error, bad color");
+                break;         
         }
 
         return color;
@@ -80,7 +79,7 @@ public class Piece : System.Object
 
     public void SetPos(Vector2Int pos) { gridPos = pos; }
 
-    public eColor _color = eColor.RED;
+    public eColor _color = eColor.PURPLE;
     public string _name;
     public uint _netID;
     public Vector2Int gridPos { get; private set; }

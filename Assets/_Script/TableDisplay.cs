@@ -67,7 +67,7 @@ public class TableDisplay : MonoBehaviour
     public void KillPiece(Piece p)
     {
         //play a sfx
-        RTAudioManager.Get().PlayEx("flame", 1.0f, 1.0f, false, 0.04f);
+        RTAudioManager.Get().PlayEx("flame", 0.4f, 1.0f, false, 0.04f);
         Destroy(p._displayPieceScript.gameObject);
         p._displayPieceScript = null;
         _board.GetCell(p.gridPos)._piece = null;

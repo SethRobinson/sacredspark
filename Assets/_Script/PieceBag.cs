@@ -20,7 +20,17 @@ public class PieceBag : System.Object
         for (int i = 0; i < C_MAX_PIECES_IN_BAG; i++)
         {
             var p = new Piece();
-            p._color = p.GetRandomPieceColor(Config.Get()._colorsOnBoard);
+            int colorCount = Config.Get()._colorsOnBoard;
+
+            if (GameLogic.Get().GetLevel() >= 20)
+            {
+                colorCount += 1;
+                if (colorCount > 4)
+                {
+                    colorCount = 4;
+                }
+            }
+            p._color = p.GetRandomPieceColor(colorCount);
             p._subType = Piece.eSubType.NORMAL;
             tempBag.Add(p);
         }

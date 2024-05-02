@@ -50,8 +50,8 @@ public class FloatingPieces : MonoBehaviour
     float _nextDownMoveTime;
     float _ignoreKeyTimer;
     bool _bDirWasHeldDownLastFrame;
+  
     const float C_IGNORE_KEY_TIME = 0.2f; //we don't allow movement right after this spawns to help stop false moves
-    bool _bQuickDropAllowed = true;
     //for debugging, a way to cheat
     Piece.eColor _nextPieceColor = Piece.eColor.ANY;
     Piece.eSubType _nextPieceSubType = Piece.eSubType.NORMAL;
@@ -72,12 +72,8 @@ public class FloatingPieces : MonoBehaviour
         {
             _pieceData[i] = new PieceData();
             _pieceData[i]._visualPiece = Instantiate(TableDisplay.Get().GetPiecePrefab(), transform);
-
-
             _pieceData[i]._piece = GameLogic.Get().GetPieceBag().GetNextPiece();
-            
             _pieceData[i]._piece.SetPos(new Vector2Int(-1, -1)); //an illegal position
-           
 
             if (i == 0)
             {
@@ -113,7 +109,7 @@ public class FloatingPieces : MonoBehaviour
             _bDead = true;
 
             RTAudioManager.Get().StopMusic();
-            RTAudioManager.Get().Play("gameover");
+            RTAudioManager.Get().PlayEx("gameover", 0.6f);
 
             RTMessageManager.Get().Schedule(2.0f, GameLogic.Get().OnPlayerIsDead);
             return;
@@ -231,8 +227,6 @@ public class FloatingPieces : MonoBehaviour
         Destroy(_pieceData[i]._visualPiece);
         _pieceData[i]._piece = null;
         _pieceData[i] = null;
-
-       
     }
 
     void MovePieces(Vector3 vOffset)
@@ -331,6 +325,7 @@ public class FloatingPieces : MonoBehaviour
             MovePieces(new Vector3(0, 1, 0));
             ResetFallTimer();
         }
+
         HandleHorizontalMovement();
 
         if (_ignoreKeyTimer < Time.fixedTime)
@@ -441,7 +436,7 @@ public class FloatingPieces : MonoBehaviour
 
     void ChangeOrder(int changeBY)
     {
-            RTAudioManager.Get().Play("rotate");
+        RTAudioManager.Get().Play("rotate");
 
         if (FallingPieceCount() < 2) return;
 
@@ -451,10 +446,10 @@ public class FloatingPieces : MonoBehaviour
         _pieceData[1].vOffset = temp;
         UpdateFallingPieceVisuals();
     }
+
     void HandleRotation()
     {
         eRotPos originalRotation = _rotPos;  // Store the original rotation before any changes
-
 
         if (_bAllowFullRotation)
         {
@@ -491,11 +486,11 @@ public class FloatingPieces : MonoBehaviour
 
     void RotatePiece(eRotPos originalRotation, bool clockwise)
     {
+        bool bAllowUnlimitedTetrisStyleTimingAfterRotation = true;
+
         RTAudioManager.Get().Play("rotate");
         
-        
         if (FallingPieceCount() < 2) return; //no reason to rotate at this point
-        
         
         if (clockwise)
         {
@@ -530,14 +525,25 @@ public class FloatingPieces : MonoBehaviour
         //up
         if (!bValid && IsValidLocationOffset(new Vector3(0, -1, 0)))
         {
+  
             bValid = true;
             MovePieces(new Vector3(0, -1, 0));
         }
+
         if (!bValid && IsValidLocationOffset(new Vector3(0, 1, 0)))
         {
+      
             bValid = true;
             MovePieces(new Vector3(0, 1, 0));
         }
+
+        //if there is a tile below us, allow unlimited time:
+        if (bAllowUnlimitedTetrisStyleTimingAfterRotation && !IsValidLocationOffset(new Vector3(0, 1, 0)))
+        {
+            ResetFallTimer(); //tetris style, being nice and giving unlimited time when rotating
+        }
+
+        ResetFallTimer(); //tetris style, being nice and giving unlimited time when rotating
 
 
         if (!bValid)
@@ -550,7 +556,7 @@ public class FloatingPieces : MonoBehaviour
 
     void HandleQuickDrop()
     {
-        if (PlayerControls.Get().vDir.y > 0)
+        if (PlayerControls.Get().vDir.y > 0 && PlayerControls.Get().bUpOrDownThisFrame)
         {
             QuickDrop();
         }
@@ -558,17 +564,16 @@ public class FloatingPieces : MonoBehaviour
 
     void QuickDrop()
     {
-        if (_bQuickDropAllowed)
-        {
-            _bQuickDropAllowed = false;
+      
             //RTAudioManager.Get().Play("rotate");
-            while (IsValidLocationOffset(new Vector3(0, 1, 0)))
+            while (FallingPieceCount() > 0)
             {
                 MovePieces(new Vector3(0, 1, 0));
             }
-            ResetFallTimer();
+            //ResetFallTimer(); //this would give us a second to move after it hits the bottom, but that feels...wrong
+            _fallTimer = 0; //instantly place the block
+
           
-        }
     }
 
 }

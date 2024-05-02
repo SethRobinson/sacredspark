@@ -16,8 +16,6 @@ public class ScoreOverlay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-    
         // Ensure the text color is set to use alpha (just in case)
         _scoreText.color = new Color(_scoreText.color.r, _scoreText.color.g, _scoreText.color.b, 1);
 
@@ -25,8 +23,6 @@ public class ScoreOverlay : MonoBehaviour
         Destroy(gameObject, 1.0f);
         //make the number float up at a slow pace
         transform.DOMoveY(transform.position.y + 1.0f, 1.0f).SetEase(Ease.OutQuad);
-
-
     }
 
     // Update is called once per frame

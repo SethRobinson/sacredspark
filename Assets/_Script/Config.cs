@@ -27,7 +27,7 @@ public class Config : MonoBehaviour
 
 #endif
         _this = this;
-        _colorsOnBoard = 2;
+        _colorsOnBoard = 3;
         RTAudioManager.Get().AddClipsToLibrary(_audioClips);
 
     }

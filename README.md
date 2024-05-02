@@ -19,6 +19,14 @@ Supports gamepad (including the web version), keyboard, and touch screen (touch 
 
 [Some WIP captures](https://twitter.com/rtsoft/status/1779071519555248566)
 
+## Update on May 2nd 2024:
+
+* Changed gameplay so all connected gems (of the correct color) explode during an explosion
+* more gem colors (4th only comes out at level 20) 
+* tweaked controls, added webgl gamepad support
+* reduced volume of sfx/music
+* Can now exit back to the help screen from the main menu
+
 # Running it
 
 ## [Play Latest HTML5 Build Now!](https://www.rtsoft.com/sacredspark/)

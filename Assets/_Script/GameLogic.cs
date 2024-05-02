@@ -49,7 +49,7 @@ public class GameLogic : MonoBehaviour
 
     public void ResetComboMultiplier()
     {
-        Debug.Log("Resetting Multipliar");
+        //Debug.Log("Resetting Multipliar");
         _comboMultiplier = 1;
     }
     
@@ -81,7 +81,7 @@ public class GameLogic : MonoBehaviour
     public void ShowTitleScreenFromIntroSplash()
     {
         //play music
-        RTMessageManager.Get().Schedule(0.1f, RTAudioManager.Get().PlayMusic, "title_screen_music", 0.7f, 1.0f, true);
+        RTMessageManager.Get().Schedule(0.1f, RTAudioManager.Get().PlayMusic, "title_screen_music", 0.5f, 1.0f, true);
         ShowTitleScreen();
     }
 
@@ -96,7 +96,6 @@ public class GameLogic : MonoBehaviour
     {
         if (_floatingPieces != null)
         {
-         
             Debug.LogError("Why does a floating piece already exist?");
             return;
         }
@@ -140,6 +139,7 @@ public class GameLogic : MonoBehaviour
 
     void CalculateLevel()
     {
+
         _level = 1+ (int)((float)_pieceClearCount / (float)_linesNeededToIncreaseLevel);
         UpdateLevelText();
     }
@@ -195,11 +195,11 @@ public class GameLogic : MonoBehaviour
 
         AddJunkToStartup();
 
-        AddPiece(4,5, Piece.eColor.RED, Piece.eSubType.NORMAL);
-        AddPiece(5, 5, Piece.eColor.RED, Piece.eSubType.NORMAL);
-        AddPiece(6, 5, Piece.eColor.RED, Piece.eSubType.NORMAL);
+        AddPiece(4,5, Piece.eColor.PURPLE, Piece.eSubType.NORMAL);
+        AddPiece(5, 5, Piece.eColor.PURPLE, Piece.eSubType.NORMAL);
+        AddPiece(6, 5, Piece.eColor.PURPLE, Piece.eSubType.NORMAL);
 
-        ForceNextPiece(Piece.eColor.RED, Piece.eSubType.NORMAL, Piece.eColor.RED, Piece.eSubType.BOOKEND);
+        ForceNextPiece(Piece.eColor.PURPLE, Piece.eSubType.NORMAL, Piece.eColor.PURPLE, Piece.eSubType.BOOKEND);
         //AddPiece(4, 9, Piece.eColor.RED, Piece.eSubType.NORMAL);
     }
     public void AddJunkToStartup()
@@ -261,6 +261,7 @@ public class GameLogic : MonoBehaviour
     public void CheckBoardForCompletions()
     {
         var matches = GameLogic.Get().GetBoard().CheckForCompletedSummonedFires();
+        matches = GameLogic.Get().GetBoard().AddTouchingSameColorGemsTolist(matches);
 
         if (matches.Count > 0)
         {
@@ -271,7 +272,6 @@ public class GameLogic : MonoBehaviour
         {
             //no more combo I guess
             GameLogic.Get().ResetComboMultiplier();
-
         }
     }
     public void OnPlayerIsDead()
@@ -280,7 +280,7 @@ public class GameLogic : MonoBehaviour
         _floatingPieces = null;
         //StartGame();
         //play music with RTMessageManager
-        RTMessageManager.Get().Schedule(0.1f, RTAudioManager.Get().PlayMusic, "gameover_music", 0.6f, 1.0f, true);
+        RTMessageManager.Get().Schedule(0.1f, RTAudioManager.Get().PlayMusic, "gameover_music", 0.5f, 1.0f, true);
         ShowTitleScreen();
     }
 

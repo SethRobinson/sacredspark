@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.UIElements;
@@ -221,7 +222,7 @@ public class Board : System.Object
 
         directionBlocked = true;
     }
-    public List<Vector2Int>  CheckForCompletedSummonedFiresFromBookend(int x, int y, Piece basePiece)
+    public List<Vector2Int> CheckForCompletedSummonedFiresFromBookend(int x, int y, Piece basePiece)
     {
         int minimumSidesConnectedForMatch = 3;
         bool bBookendColorDontMatter = true;
@@ -313,10 +314,76 @@ public class Board : System.Object
         return totalMatches;
     }
 
+    public List<Vector2Int> AddTouchingSameColorGemsTolist(List<Vector2Int> gemList)
+    {
+        if (gemList.DefaultIfEmpty().Count() == 0) return new List<Vector2Int>();
+
+        //first, copy the current gem list to a new list
+        List<Vector2Int> newGemList = new List<Vector2Int>();
+        newGemList.AddRange(gemList);
+
+        //now go through each gem on the gemList and add any touching gems that are the same color to the new
+        //newGemList, if it isn't already on it.
+
+        //check each direction
+        Vector2Int[] directions = new Vector2Int[4];
+        directions[0] = new Vector2Int(0, -1); //up
+        directions[1] = new Vector2Int(1, 0); //right
+        directions[2] = new Vector2Int(0, 1); //down
+        directions[3] = new Vector2Int(-1, 0); //left
+
+
+        for (int i = 0; i < gemList.Count; i++)
+        {
+            Vector2Int v = gemList[i];
+
+            var originalCell = GetCellPiece(v);
+
+            if (originalCell == null) continue;
+
+            if (originalCell._subType == Piece.eSubType.BOOKEND)
+            {
+                //bookends don't count
+                continue;
+            }
+
+            Piece.eColor color = originalCell._color;
+
+           
+            for (int d = 0; d < 4; d++)
+            {
+                Vector2Int v2 = v + directions[d];
+                if (IsValidCell(v2, false))
+                {
+                    var cell = GetCellPiece(v2);
+                    if (cell == null) continue;
+
+                    //ignore bookends here too
+                    if (cell._subType == Piece.eSubType.BOOKEND)
+                    {
+                        continue;
+                    }
+                    Piece.eColor color2 = cell._color;
+                    if (color2 == color)
+                    {
+                        //add it to the new list
+                        if (!newGemList.Contains(v2))
+                        {
+                            newGemList.Add(v2);
+                            gemList.Add(v2); //we'll need to check this new cell's surrounding as well
+                        }
+                    }
+                }
+            }
+        }
+
+        //return the list we made
+        return newGemList;
+    }
+
     //this version checks if diamonds are growing out of bookends and detects that, doesn't require two bookends
     public List<Vector2Int> CheckForCompletedSummonedFires()
     {
-      
          List<Vector2Int> totalMatches = new List<Vector2Int>(); ;
 
         //scan to find bookends
@@ -357,7 +424,7 @@ public class Board : System.Object
         bool bBookendColorDontMatter = true;
 
         List<Vector2Int> matchLine = new List<Vector2Int>();
-        Piece.eColor matchColor = Piece.eColor.RED;
+        Piece.eColor matchColor = Piece.eColor.PURPLE;
         List<Vector2Int> totalMatches = new List<Vector2Int>(); ;
 
         for (int y = 0; y < _height; y++)
